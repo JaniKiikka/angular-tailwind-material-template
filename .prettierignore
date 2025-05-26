@@ -1,0 +1,13 @@
+# compiled / generated stuff
+dist
+out
+coverage
+*.min.js
+
+# IDE / tooling
+.vscode
+.idea
+
+# Angular build artefacts
+*.ngfactory.*
+*.ngsummary.*

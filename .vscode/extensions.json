@@ -1,0 +1,41 @@
+{
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+  "recommendations": ["angular.ng-template"]
+}
+{
+  // Hide config & build artefacts in the Explorer
+  "files.exclude": {
+    ".angular": true,
+    ".gitignore": true,
+    ".postcssrc.*": true,
+    ".editorconfig": true,
+    ".vscode": true,
+    "**/.eslintrc.*": true,
+    "**/eslint.config.js": true,
+    "**/.prettier{rc,ignore}*": true,
+    "**/tailwind.config.*": true,
+    "**/karma.conf.*": true,
+    "**/jest.config.*": true,
+    "tsconfig.*.json": true,
+    "coverage": true,
+    "dist": true,
+    "node_modules": true,
+    "package-lock.json": true,
+    "angular.json": true,
+    "tsconfig.json": true,
+  },
+  // Make Ctrl+Shift+F searches faster / cleaner
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true,
+    "**/.eslintrc.*": true,
+    "**/.prettier*": true
+  },
+  // Optional: stop the file watcher from tracking them
+  "files.watcherExclude": {
+    "**/dist/**": true,
+    "**/coverage/**": true,
+    "**/node_modules/**": true
+  }
+}

@@ -1,0 +1,4 @@
+/* You can customize the dialog appearance here */
+:host {
+  display: block;
+}
