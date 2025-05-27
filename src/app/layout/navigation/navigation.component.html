@@ -1,0 +1,62 @@
+<div
+  class="h-full flex flex-col bg-gray-50 transition-all duration-300 ease-in-out"
+  [ngClass]="{
+    'w-16': isNavigationCollapsed(),
+    'w-64': !isNavigationCollapsed()
+  }"
+>
+  <!-- Logo and Title Section -->
+  <div class="h-16 min-h-16 bg-white border-b border-gray-200 flex items-center px-4">
+    <img src="favicon.ico" alt="App Logo" class="h-8 w-8 flex-shrink-0" />
+    @if (!isNavigationCollapsed()) {
+    <span class="ml-3 text-lg font-bold text-gray-800 whitespace-nowrap"> Angular App </span>
+    }
+  </div>
+
+  <!-- Navigation Items -->
+  <nav class="flex-1 overflow-hidden">
+    <div class="space-y-1 p-2">
+      @for (item of navigationItems; track item.route) {
+      <app-nav-button
+        [icon]="item.icon"
+        [label]="item.label"
+        [isActive]="isActiveRoute(item.route)"
+        [isCollapsed]="isNavigationCollapsed()"
+        [tooltip]="isNavigationCollapsed() ? item.label : ''"
+        tooltipPosition="right"
+        [tooltipDisabled]="!isNavigationCollapsed()"
+        testId="nav-item"
+        (clicked)="navigateTo(item.route)"
+      ></app-nav-button>
+      }
+    </div>
+  </nav>
+
+  <!-- Collapse/Expand Toggle - only show when navigation can be manually toggled -->
+  @if (!shouldAutoCollapse()) {
+  <div class="border-t border-gray-200 p-2">
+    <button
+      mat-icon-button
+      class="w-full flex items-center justify-center hover:bg-gray-100 rounded-lg p-3 transition-colors duration-200"
+      (click)="toggleNavigation()"
+      [title]="isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      data-test="nav-toggle"
+    >
+      <mat-icon class="text-gray-600"> {{ isCollapsed() ? 'chevron_right' : 'chevron_left' }} </mat-icon>
+    </button>
+  </div>
+  } @else if (isNavigationCollapsed()) {
+  <!-- Expand button for small screens when collapsed -->
+  <div class="border-t border-gray-200 p-2">
+    <button
+      mat-icon-button
+      class="w-full flex items-center justify-center hover:bg-gray-100 rounded-lg p-3 transition-colors duration-200"
+      (click)="toggleNavigation()"
+      title="Expand navigation"
+      data-test="nav-expand"
+    >
+      <mat-icon class="text-gray-600">menu</mat-icon>
+    </button>
+  </div>
+  }
+</div>

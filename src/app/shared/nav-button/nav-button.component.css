@@ -1,0 +1,21 @@
+/* Custom navigation button styles */
+button {
+  /* Material button ripple effect simulation */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Focus states for accessibility */
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Hover effects */
+button:hover:not(:disabled) {
+  background-color: rgb(243 244 246) !important;
+}
+
+button:hover:not(:disabled).bg-blue-50 {
+  background-color: rgb(219 234 254) !important;
+}

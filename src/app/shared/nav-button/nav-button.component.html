@@ -1,0 +1,35 @@
+<button
+  class="w-full flex items-center rounded-lg hover:bg-gray-100 min-h-12 cursor-pointer border-none bg-transparent relative overflow-hidden px-3 mb-1"
+  [ngClass]="{
+    'bg-blue-50 text-blue-600': isActive,
+    'text-gray-700': !isActive
+  }"
+  (click)="onClick()"
+  [matTooltip]="tooltip"
+  [matTooltipPosition]="tooltipPosition"
+  [matTooltipDisabled]="tooltipDisabled"
+  [attr.data-test]="testId"
+  matRipple
+  [matRippleColor]="isActive ? 'rgba(59, 130, 246, 0.3)' : 'rgba(0, 0, 0, 0.1)'"
+>
+  <mat-icon
+    class="flex-shrink-0"
+    [ngClass]="{
+      'text-blue-600': isActive,
+      'text-gray-600': !isActive
+    }"
+  >
+    {{ icon }}
+  </mat-icon>
+  @if (!isCollapsed) {
+  <span
+    class="ml-3 whitespace-nowrap text-base font-medium"
+    [ngClass]="{
+      'text-blue-600': isActive,
+      'text-gray-700': !isActive
+    }"
+  >
+    {{ label }}
+  </span>
+  }
+</button>

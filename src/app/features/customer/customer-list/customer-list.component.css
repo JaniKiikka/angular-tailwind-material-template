@@ -1,0 +1,19 @@
+/* Table styling */
+.mat-mdc-table {
+  background-color: white;
+}
+
+.mat-mdc-header-row,
+.mat-mdc-row {
+  background-color: white;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  background-color: white;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.25rem;
+}
