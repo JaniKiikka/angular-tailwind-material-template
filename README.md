@@ -7,6 +7,11 @@ This project template uses the following key tools/libraries/dependencies:
 - <b>TailwindCSS</b> (v4.1) for styling and layouts
 - <b>Angular Material</b> (v19.x) for pre-built components
 - <b>ESLint + Prettier</b> for linting and formatting
+- <b>Vitest</b> Vitest for testing
+
+## Preview
+
+![alt text](preview.png)
 
 ## Prerequisites
 
@@ -112,17 +117,18 @@ Workspace defaults—like code formatting and hidden config files—are set in `
 
 ```
 src/app/
-├── core/ ← singletons (services, guards, interceptors)
-├── layout/ ← components used by the layout (e.g. header, footer, sidebar)
-├── shared/ ← shared components, directives, pipes, models
-├── features/ ← domain-specific modules, each in its own folder
-│ └── feature-name/
-│ ├── components/
-│ ├── services/
-│ ├── feature-name.component.ts
-│ └── feature-name.component.html
-│ └── feature-name.component.css
-│ └── feature-name.component.spec.ts
+├── core/         ← singletons (services, guards, interceptors)
+├── layout/       ← components used by the layout (e.g. header, footer, sidebar)
+├── shared/       ← shared components, directives, pipes, models
+├── features/     ← domain-specific modules, each in its own folder
+│   └── feature-name/
+│       ├── feature-component/
+│       │   └── ...
+│       ├── feature-services/
+│       ├── feature-name.component.ts
+│       ├── feature-name.component.html
+│       ├── feature-name.component.css        ← Use only if necessary; prefer TailwindCSS
+│       └── feature-name.component.spec.ts
 ```
 
 ## Angular Material Theme Customization

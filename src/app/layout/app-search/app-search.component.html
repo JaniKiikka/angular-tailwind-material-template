@@ -1,43 +1,40 @@
-<div class="relative w-full max-w-sm">
+<div #searchContainer class="relative w-full max-w-md">
   <!-- Search icon -->
   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-    <svg
-      class="w-5 h-5 text-gray-400"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M21 21l-4.35-4.35m1.4-5.4a7 7 0 11-14 0 7 7 0 0114 0z"
-      />
-    </svg>
+    <mat-icon class="text-gray-500 text-xl">search</mat-icon>
   </div>
 
   <!-- Input with left padding, default font-size, gray background that turns white on focus -->
   <input
+    #searchInput
     type="text"
-    class="w-full h-10 pl-10 border border-gray-400 rounded px-3 text-base bg-gray-50 focus:bg-white focus:outline-none"
+    class="search-input w-full h-10 pl-10 pr-16 border border-gray-400 rounded px-3 text-base bg-gray-50 focus:bg-white focus:outline-none"
     placeholder="Search..."
-    [(ngModel)]="query"
-    (input)="onInput()"
+    [value]="query()"
+    (input)="onInput($event)"
     (keydown)="onKeydown($event)"
   />
 
+  <!-- Keyboard shortcut indicator -->
+  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+    <kbd
+      class="hidden sm:inline-flex items-center px-2 py-1 text-xs font-mono text-gray-500 bg-gray-100 border border-gray-300 rounded"
+    >
+      Ctrl+K
+    </kbd>
+  </div>
+
   <ul
-    *ngIf="suggestionsToDisplay.length"
-    class="absolute left-0 right-0 bg-white border border-gray-300 mt-1 rounded shadow-lg max-h-48 overflow-auto z-50"
+    *ngIf="suggestionsToDisplay().length"
+    class="suggestions-list absolute left-0 right-0 bg-white border border-gray-300 mt-1 rounded shadow-lg max-h-48 overflow-auto z-50"
   >
     <li
-      *ngFor="let item of suggestionsToDisplay; let i = index"
+      *ngFor="let item of suggestionsToDisplay(); let i = index; trackBy: trackBySuggestion"
       (click)="selectSuggestion(item)"
-      (mouseenter)="selectedIndex = i"
-      [class.bg-blue-500]="i === selectedIndex"
-      [class.text-white]="i === selectedIndex"
-      class="px-4 py-2 cursor-pointer hover:bg-gray-200 text-base"
+      (mouseenter)="selectedIndex.set(i)"
+      [class.bg-blue-500]="i === selectedIndex()"
+      [class.text-white]="i === selectedIndex()"
+      class="suggestion-item px-4 py-2 cursor-pointer hover:bg-gray-200 text-base"
     >
       {{ item }}
     </li>
