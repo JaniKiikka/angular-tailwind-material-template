@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { CustomerService } from '../customer.service';
 import { Customer } from '../customer.model';
@@ -26,6 +27,7 @@ import { MetricCardComponent, MetricData } from '../../../shared/metric-card/met
     MatIconModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatTabsModule,
     MetricCardComponent,
   ],
   templateUrl: './customer-list.component.html',
@@ -34,6 +36,7 @@ import { MetricCardComponent, MetricData } from '../../../shared/metric-card/met
 })
 export class CustomerListComponent implements OnInit {
   allCustomers = signal<Customer[]>([]);
+  selectedTab = signal<'my' | 'all' | 'unassigned'>('my');
   selectedFilter = signal<'all' | 'active' | 'inactive'>('all');
   sortState = signal<Sort>({ active: '', direction: '' });
   pageIndex = signal<number>(0);
@@ -41,15 +44,30 @@ export class CustomerListComponent implements OnInit {
 
   // Computed for filtered and sorted customers (before pagination)
   filteredAndSortedCustomers = computed(() => {
+    const tab = this.selectedTab();
     const filter = this.selectedFilter();
     const allCustomers = this.allCustomers();
     const sort = this.sortState();
 
     let filteredCustomers = allCustomers;
 
-    // Apply filter
+    // Apply tab filter first
+    switch (tab) {
+      case 'my':
+        filteredCustomers = allCustomers.filter(customer => customer.assignedTo === 'me');
+        break;
+      case 'unassigned':
+        filteredCustomers = allCustomers.filter(customer => customer.assignedTo === 'unassigned');
+        break;
+      case 'all':
+      default:
+        filteredCustomers = allCustomers;
+        break;
+    }
+
+    // Apply status filter
     if (filter !== 'all') {
-      filteredCustomers = allCustomers.filter(customer => customer.status === filter);
+      filteredCustomers = filteredCustomers.filter(customer => customer.status === filter);
     }
 
     // Apply sorting
@@ -68,6 +86,8 @@ export class CustomerListComponent implements OnInit {
           return compare(a.email, b.email, isAsc);
         case 'status':
           return compare(a.status, b.status, isAsc);
+        case 'salesContact':
+          return compare(a.salesContact, b.salesContact, isAsc);
         case 'lastOrder':
           return compare(a.lastOrder, b.lastOrder, isAsc);
         case 'totalOrders':
@@ -93,7 +113,16 @@ export class CustomerListComponent implements OnInit {
     return filteredAndSorted.slice(startIndex, endIndex);
   });
 
-  displayedColumns: string[] = ['name', 'company', 'email', 'phone', 'status', 'lastOrder', 'totalOrders', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'company',
+    'email',
+    'salesContact',
+    'status',
+    'lastOrder',
+    'totalOrders',
+    'actions',
+  ];
 
   metricsData: MetricData[] = [
     {
@@ -132,6 +161,13 @@ export class CustomerListComponent implements OnInit {
     this.customerService.getCustomers().subscribe(data => {
       this.allCustomers.set(data);
     });
+  }
+
+  onTabChange(tabIndex: number) {
+    const tabs: ('my' | 'all' | 'unassigned')[] = ['my', 'all', 'unassigned'];
+    this.selectedTab.set(tabs[tabIndex]);
+    // Reset to first page when tab changes
+    this.pageIndex.set(0);
   }
 
   onFilterChange(filter: 'all' | 'active' | 'inactive') {
