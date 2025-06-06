@@ -3,12 +3,13 @@
   <p>{{data.content}}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button
-    *ngFor="let btn of data.buttons"
-    mat-button
-    [color]="btn.color"
-    (click)="onButtonClick(btn.value || btn.text)"
-  >
-    {{btn.text}}
-  </button>
+  @for (btn of data.buttons; track btn) {
+    <button
+      mat-button
+      [color]="btn.color"
+      (click)="onButtonClick(btn.value || btn.text)"
+      >
+      {{btn.text}}
+    </button>
+  }
 </mat-dialog-actions>

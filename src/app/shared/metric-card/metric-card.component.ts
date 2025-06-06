@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -14,7 +14,7 @@ export interface MetricData {
 @Component({
   selector: 'app-metric-card',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule],
+  imports: [MatCardModule, MatIconModule],
   templateUrl: './metric-card.component.html',
   styleUrl: './metric-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

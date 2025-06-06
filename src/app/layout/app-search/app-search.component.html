@@ -13,30 +13,32 @@
     [value]="query()"
     (input)="onInput($event)"
     (keydown)="onKeydown($event)"
-  />
+    />
 
   <!-- Keyboard shortcut indicator -->
   <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
     <kbd
       class="hidden sm:inline-flex items-center px-2 py-1 text-xs font-mono text-gray-500 bg-gray-100 border border-gray-300 rounded"
-    >
+      >
       Ctrl+K
     </kbd>
   </div>
 
-  <ul
-    *ngIf="suggestionsToDisplay().length"
-    class="suggestions-list absolute left-0 right-0 bg-white border border-gray-300 mt-1 rounded shadow-lg max-h-48 overflow-auto z-50"
-  >
-    <li
-      *ngFor="let item of suggestionsToDisplay(); let i = index; trackBy: trackBySuggestion"
-      (click)="selectSuggestion(item)"
-      (mouseenter)="selectedIndex.set(i)"
-      [class.bg-blue-500]="i === selectedIndex()"
-      [class.text-white]="i === selectedIndex()"
-      class="suggestion-item px-4 py-2 cursor-pointer hover:bg-gray-200 text-base"
-    >
-      {{ item }}
-    </li>
-  </ul>
+  @if (suggestionsToDisplay().length) {
+    <ul
+      class="suggestions-list absolute left-0 right-0 bg-white border border-gray-300 mt-1 rounded shadow-lg max-h-48 overflow-auto z-50"
+      >
+      @for (item of suggestionsToDisplay(); track trackBySuggestion(i, item); let i = $index) {
+        <li
+          (click)="selectSuggestion(item)"
+          (mouseenter)="selectedIndex.set(i)"
+          [class.bg-blue-500]="i === selectedIndex()"
+          [class.text-white]="i === selectedIndex()"
+          class="suggestion-item px-4 py-2 cursor-pointer hover:bg-gray-200 text-base"
+          >
+          {{ item }}
+        </li>
+      }
+    </ul>
+  }
 </div>

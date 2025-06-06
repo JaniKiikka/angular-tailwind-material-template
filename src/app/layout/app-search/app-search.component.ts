@@ -12,7 +12,7 @@ import {
   DestroyRef,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
@@ -21,7 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [FormsModule, MatIconModule],
   templateUrl: './app-search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
